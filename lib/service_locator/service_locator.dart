@@ -1,4 +1,4 @@
-part of 'injector.dart';
+part of '../injector.dart';
 
 /// The `ServiceLocator` class provides methods for registering and retrieving various types of services,
 /// including singletons, asynchronous singletons, lazy singletons, factories, and asynchronous factories.

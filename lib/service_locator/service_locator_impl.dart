@@ -1,4 +1,4 @@
-part of 'injector.dart';
+part of '../injector.dart';
 
 class _ServiceLocatorImpl implements ServiceLocator {
   _ServiceLocatorImpl._();
