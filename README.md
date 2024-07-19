@@ -34,25 +34,25 @@ void appDependencies(){
 }
 ```
 
-#### Synchronous Singleton
+### Synchronous Singleton
 You can add a synchronous singleton using the following method:
 ```dart
 inject.addSingleton<MyService>(MyService());
 ```
-#### Asynchronous Singleton
+### Asynchronous Singleton
 You can add an asynchronous singleton using the following method:
 ```dart
 inject.addAsyncSingleton<MyService>(() async => MyService());
 ```
 
-#### Asynchronous Singleton
+### Asynchronous Singleton
 You can add a lazy singleton using the following method:
 ```dart
 inject.addLazySingleton<MyService>(() => MyService());
 ```
 The instance will be created only when `inject<MyService>()` is called.
 
-#### Synchronous Factory
+### Synchronous Factory
 You can add a synchronous factory using the following method:
 ```dart
 inject.addFactory<MyService>(() => MyService());
@@ -110,7 +110,7 @@ final myService = inject.getWithParams<MyService>(
 );
 ```
 
-## Disposing Instances
+### Disposing Instances
 If you want to remove a service you can use the `dispose<MyService>()` method, this will delete the instance and call the `onDispose` method associated.
 
 ```dart
@@ -122,7 +122,7 @@ inject.addSingleton<MyService>(
 inject.dispose<MyService>();
 ```
 
-## Named Instances
+### Named Instances
 If you need to add more than one instance of the same type, you can use the `name` property that most methods have:
 
 ```dart
@@ -143,7 +143,7 @@ inject.dispose<MyService>(name: 'myService1');
 inject.dispose<MyService>(name: 'myService2');
 ```
 
-## Clear
+### Clear
 If you want to remove all services you can use the clear() method. this will delete all the instances and call the `onDispose` for each service.
 
 ```dart
