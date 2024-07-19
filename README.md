@@ -17,7 +17,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  pragma_injector:
+  injector:
     git:
       url: https://github.com/chrisr04/injector
       ref: v0.0.1
