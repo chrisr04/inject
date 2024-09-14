@@ -1,6 +1,6 @@
-import 'package:injector/types/types.dart';
-import 'package:injector/services/service.dart';
-import 'package:injector/services/singleton_service.dart';
+import 'package:inject/types/types.dart';
+import 'package:inject/services/service.dart';
+import 'package:inject/services/singleton_service.dart';
 
 /// A service that provides an asynchronous singleton instance of type [T].
 ///

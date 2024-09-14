@@ -1,4 +1,4 @@
-import 'package:injector/types/types.dart';
+import 'package:inject/types/types.dart';
 
 /// An abstract class that represents a generic service.
 ///

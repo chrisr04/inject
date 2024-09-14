@@ -1,4 +1,4 @@
-# Injector
+# Inject
 
 This package provides a powerful and flexible service locator for Flutter projects, allowing for the registration and retrieval of various types of services, including singletons, asynchronous singletons, lazy singletons, factories, and asynchronous factories. It includes methods for disposing of services and clearing all registrations, making it easy to manage dependencies in your application.
 
@@ -17,17 +17,17 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  injector:
+  inject:
     git:
-      url: https://github.com/chrisr04/injector
-      ref: v0.0.1
+      url: https://github.com/chrisr04/inject
+      ref: v0.0.2
 ```
 
 ## Usage
 At your start-up you can add all the objects you want to access later like this:
 
 ```dart
-final inject = Injector.inject;
+final inject = Inject.instance;
 
 void appDependencies(){
   inject.addSingleton<MyService>(MyService());

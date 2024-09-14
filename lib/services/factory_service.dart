@@ -1,5 +1,5 @@
-import 'package:injector/types/types.dart';
-import 'package:injector/services/service.dart';
+import 'package:inject/types/types.dart';
+import 'package:inject/services/service.dart';
 
 /// A service class that creates and manages an instance of a specific type [T].
 ///

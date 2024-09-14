@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:injector/injector.dart';
+import 'package:inject/inject.dart';
 
 class MyService {
   void dispose() {}
@@ -18,7 +18,7 @@ class MyParamService {
 }
 
 void main() {
-  final inject = Injector.inject;
+  final inject = Inject.instance;
 
   tearDown(() {
     inject.clear();

@@ -1,4 +1,4 @@
-import 'package:injector/services/service.dart';
+import 'package:inject/services/service.dart';
 
 /// A singleton service class that extends the `Service` class.
 ///

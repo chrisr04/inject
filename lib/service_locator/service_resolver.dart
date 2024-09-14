@@ -1,4 +1,4 @@
-part of '../injector.dart';
+part of '../inject.dart';
 
 /// A utility class for resolving services in a service locator.
 ///

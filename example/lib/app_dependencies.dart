@@ -1,7 +1,7 @@
 import 'package:example/app_config.dart';
-import 'package:injector/injector.dart';
+import 'package:inject/inject.dart';
 
-final inject = Injector.inject;
+final inject = Inject.instance;
 
 abstract class AppDependencies {
   static void init() {

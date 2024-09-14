@@ -1,5 +1,5 @@
-import 'package:injector/types/types.dart';
-import 'package:injector/services/service.dart';
+import 'package:inject/types/types.dart';
+import 'package:inject/services/service.dart';
 
 /// A service that creates instances of type [T] asynchronously.
 ///
