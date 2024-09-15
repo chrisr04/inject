@@ -7,7 +7,7 @@ import 'package:inject/services/service.dart';
 /// function to create instances of type [T]. It extends the `Service` class and adds
 /// functionality to support asynchronous initialization.
 ///
-/// The `create` parameter is required and should be an instance of [AsyncServiceCreator<T>]
+/// The `create` parameter is required and should be an instance of [FutureServiceCreator<T>]
 /// that defines the asynchronous creation logic.
 ///
 /// Example:

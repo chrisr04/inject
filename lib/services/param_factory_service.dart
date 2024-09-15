@@ -13,7 +13,7 @@ import 'package:inject/services/service.dart';
 /// callback to clean up resources when the service is disposed.
 ///
 /// ```dart
-/// final myFactoryService = ParamFactoryService<MyType>(
+/// ParamFactoryService<MyType>(
 ///   create: (params) => MyType(
 ///     param1: params['param1'],
 ///   ),

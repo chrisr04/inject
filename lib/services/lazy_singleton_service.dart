@@ -10,7 +10,7 @@ import 'package:inject/services/service.dart';
 /// and potentially improving the application's performance.
 ///
 /// ```dart
-/// final myLazySingletonService = LazySingletonService<MyType>(
+/// LazySingletonService<MyType>(
 ///   create: () => MyType(),
 ///   onDispose: (instance) => instance.dispose(),
 /// );

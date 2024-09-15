@@ -12,7 +12,7 @@ import 'package:inject/services/service.dart';
 ///
 /// Example usage:
 /// ```dart
-/// final myService = SingletonService<MyService>(
+/// SingletonService<MyService>(
 ///   instance: MyService(),
 ///   onDispose: (instance) => instance.dispose(),
 /// );
