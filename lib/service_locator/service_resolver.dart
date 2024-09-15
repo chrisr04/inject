@@ -86,7 +86,7 @@ abstract class _ServiceResolver {
   ///
   /// Throws a `StateError` if the service with the specified `name` is not an
   /// asynchronous factory service.
-  static Future<T> resolveNamedAsyncService<T>(
+  static Future<T> resolveNamedFutureService<T>(
     Map<String, dynamic> namedServices, {
     required String name,
   }) {
@@ -109,7 +109,7 @@ abstract class _ServiceResolver {
   /// Resolves a typed asynchronous service of type [T] from the provided `typedServices` map.
   ///
   /// Throws a `StateError` if the service is not an asynchronous factory service.
-  static Future<T> resolveTypedAsyncService<T>(
+  static Future<T> resolveTypedFutureService<T>(
     Map<Type, dynamic> typedServices,
   ) {
     if (typedServices[T] is! FutureFactoryService<T>) {
@@ -166,7 +166,7 @@ abstract class _ServiceResolver {
   ///
   /// Throws a `StateError` if the service with the specified `name` is not an
   /// asynchronous factory service.
-  static Future<T> resolveNamedAsyncParamService<T>(
+  static Future<T> resolveNamedFutureParamService<T>(
     Map<String, dynamic> namedServices, {
     required String name,
     required Map<String, dynamic> params,
@@ -190,7 +190,7 @@ abstract class _ServiceResolver {
   /// Resolves a typed async params service of type [T] from the provided `typedServices` map.
   ///
   /// Throws a `StateError` if the service is not an asynchronous factory service.
-  static Future<T> resolveTypedAsyncParamService<T>(
+  static Future<T> resolveTypedFutureParamService<T>(
     Map<Type, dynamic> typedServices, {
     required Map<String, dynamic> params,
   }) {

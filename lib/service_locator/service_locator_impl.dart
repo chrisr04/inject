@@ -27,14 +27,14 @@ class _ServiceLocatorImpl implements ServiceLocator {
   @override
   Future<T> future<T>({String? name}) {
     if (name != null) {
-      return _ServiceResolver.resolveNamedAsyncService<T>(
+      return _ServiceResolver.resolveNamedFutureService<T>(
         _namedServices,
         name: name,
       );
     }
 
     if (_typedServices.containsKey(T)) {
-      return _ServiceResolver.resolveTypedAsyncService<T>(_typedServices);
+      return _ServiceResolver.resolveTypedFutureService<T>(_typedServices);
     }
 
     throw StateError('The $T service wasn\'t registered');
@@ -69,7 +69,7 @@ class _ServiceLocatorImpl implements ServiceLocator {
     String? name,
   }) {
     if (name != null) {
-      return _ServiceResolver.resolveNamedAsyncParamService<T>(
+      return _ServiceResolver.resolveNamedFutureParamService<T>(
         _namedServices,
         name: name,
         params: params,
@@ -77,7 +77,7 @@ class _ServiceLocatorImpl implements ServiceLocator {
     }
 
     if (_typedServices.containsKey(T)) {
-      return _ServiceResolver.resolveTypedAsyncParamService<T>(
+      return _ServiceResolver.resolveTypedFutureParamService<T>(
         _typedServices,
         params: params,
       );
