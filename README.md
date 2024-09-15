@@ -20,7 +20,7 @@ dependencies:
   inject:
     git:
       url: https://github.com/chrisr04/inject
-      ref: v0.0.2
+      ref: v0.0.3
 ```
 
 ## Usage
@@ -39,13 +39,14 @@ You can add a synchronous singleton using the following method:
 ```dart
 inject.addSingleton<MyService>(MyService());
 ```
+
 ### Asynchronous Singleton
 You can add an asynchronous singleton using the following method:
 ```dart
-inject.addAsyncSingleton<MyService>(() async => MyService());
+inject.addFutureSingleton<MyService>(() async => MyService());
 ```
 
-### Asynchronous Singleton
+### Lazy Singleton
 You can add a lazy singleton using the following method:
 ```dart
 inject.addLazySingleton<MyService>(() => MyService());
@@ -63,15 +64,27 @@ A new instance will be created when `inject<MyService>()` is called.
 You can add an asynchronous factory using the following method:
 
 ```dart
-inject.addAsyncFactory<MyService>(() async => MyService());
+inject.addFutureFactory<MyService>(() async => MyService());
 ```
 
-### Factory with params
+### Factory With Params
 You can add a factory with dynamic params using the following method:
 
 ```dart
 inject.addFactoryWithParams<MyService>(
   (params) => MyService(
+    id: params['id'] as int,
+    token: params['token'] as String,
+  ),
+);
+```
+
+### Future Factory With Params
+You can add a factory with dynamic params using the following method:
+
+```dart
+inject.addFutureFactoryWithParams<MyService>(
+  (params) async => MyService(
     id: params['id'] as int,
     token: params['token'] as String,
   ),
@@ -88,21 +101,34 @@ final myService = inject<MyService>();
 For Singletons:
 
 ```dart
-await inject.resolveAsync();
+await inject.resolveFutureSingletons();
 final myService = inject<MyService>();
 ```
 
-**Note:** The `resolveAsync()` method resolves all asynchronous singletons you have added so far.
+**Note:** The `resolveFutureSingletons()` method resolves all asynchronous singletons you have added so far.
 
 For factories:
 
 ```dart
-final myService = await inject.getAsync<MyService>();
+final myService = await inject.future<MyService>();
 ```
 
-### Parameters Retrieval
+### Parameters Retrievals
+For synchronous factories:
+
 ```dart
-final myService = inject.getWithParams<MyService>(
+final myService = inject.withParams<MyService>(
+  params: {
+    'id': 34773,
+    'token': 'Yzs2st9bAK0bA1r',
+  }
+);
+```
+
+For asynchronous factories:
+
+```dart
+final myService = await inject.futureWithParams<MyService>(
   params: {
     'id': 34773,
     'token': 'Yzs2st9bAK0bA1r',

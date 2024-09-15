@@ -14,8 +14,9 @@ import 'package:inject/services/service.dart';
 ///
 /// ```dart
 /// final myFactoryService = ParamFactoryService<MyType>(
-///   create: (params) => MyType(param1: params['param1']),
-///   onDispose: (instance) => instance.dispose(),
+///   create: (params) => MyType(
+///     param1: params['param1'],
+///   ),
 /// );
 /// ```
 ///

@@ -3,7 +3,7 @@ import 'package:inject/services/service.dart';
 
 /// A service that creates instances of type [T] asynchronously.
 ///
-/// The `AsyncFactoryService` class is a specialized service that uses an asynchronous
+/// The `FutureFactoryService` class is a specialized service that uses an asynchronous
 /// function to create instances of type [T]. It extends the `Service` class and adds
 /// functionality to support asynchronous initialization.
 ///
@@ -12,7 +12,7 @@ import 'package:inject/services/service.dart';
 ///
 /// Example:
 /// ```dart
-/// AsyncFactoryService<MyService>(
+/// FutureFactoryService<MyService>(
 ///   create: () async {
 ///     // Perform async operations to initialize MyService
 ///     return MyService();
@@ -21,13 +21,13 @@ import 'package:inject/services/service.dart';
 /// ```
 ///
 /// [T] - The type of the service being created.
-class AsyncFactoryService<T> extends Service<T> {
+class FutureFactoryService<T> extends Service<T> {
   /// Creates an instance of `AsyncFactoryService`.
   ///
   /// The `create` function is required and should contain the logic for asynchronously
   /// creating an instance of type [T].
-  AsyncFactoryService({required this.create});
+  FutureFactoryService({required this.create});
 
   /// The asynchronous function that creates an instance of type [T].
-  final AsyncServiceCreator<T> create;
+  final FutureServiceCreator<T> create;
 }

@@ -11,7 +11,10 @@ class _ServiceLocatorImpl implements ServiceLocator {
 
   T call<T>({String? name}) {
     if (name != null) {
-      return _ServiceResolver.resolveNamedService<T>(_namedServices, name);
+      return _ServiceResolver.resolveNamedService<T>(
+        _namedServices,
+        name: name,
+      );
     }
 
     if (_typedServices.containsKey(T)) {
@@ -22,9 +25,12 @@ class _ServiceLocatorImpl implements ServiceLocator {
   }
 
   @override
-  Future<T> getAsync<T>({String? name}) {
+  Future<T> future<T>({String? name}) {
     if (name != null) {
-      return _ServiceResolver.resolveNamedAsyncService<T>(_namedServices, name);
+      return _ServiceResolver.resolveNamedAsyncService<T>(
+        _namedServices,
+        name: name,
+      );
     }
 
     if (_typedServices.containsKey(T)) {
@@ -35,22 +41,45 @@ class _ServiceLocatorImpl implements ServiceLocator {
   }
 
   @override
-  T getWithParams<T>({
+  T withParams<T>({
     required Map<String, dynamic> params,
     String? name,
   }) {
     if (name != null) {
       return _ServiceResolver.resolveNamedParamService<T>(
         _namedServices,
-        name,
-        params,
+        name: name,
+        params: params,
       );
     }
 
     if (_typedServices.containsKey(T)) {
       return _ServiceResolver.resolveTypedParamService<T>(
         _typedServices,
-        params,
+        params: params,
+      );
+    }
+
+    throw StateError('The $T service wasn\'t registered');
+  }
+
+  @override
+  Future<T> futureWithParams<T>({
+    required Map<String, dynamic> params,
+    String? name,
+  }) {
+    if (name != null) {
+      return _ServiceResolver.resolveNamedAsyncParamService<T>(
+        _namedServices,
+        name: name,
+        params: params,
+      );
+    }
+
+    if (_typedServices.containsKey(T)) {
+      return _ServiceResolver.resolveTypedAsyncParamService<T>(
+        _typedServices,
+        params: params,
       );
     }
 
@@ -77,12 +106,12 @@ class _ServiceLocatorImpl implements ServiceLocator {
   }
 
   @override
-  void addAsyncSingleton<T>(
-    AsyncServiceCreator<T> create, {
+  void addFutureSingleton<T>(
+    FutureServiceCreator<T> create, {
     String? name,
     ServiceDisposer<T>? onDispose,
   }) {
-    final service = AsyncSingletonService<T>(
+    final service = FutureSingletonService<T>(
       onDispose: onDispose,
       create: create,
     );
@@ -149,11 +178,11 @@ class _ServiceLocatorImpl implements ServiceLocator {
   }
 
   @override
-  void addAsyncFactory<T>(
-    AsyncServiceCreator<T> create, {
+  void addFutureFactory<T>(
+    FutureServiceCreator<T> create, {
     String? name,
   }) {
-    final service = AsyncFactoryService(
+    final service = FutureFactoryService(
       create: create,
     );
 
@@ -166,17 +195,34 @@ class _ServiceLocatorImpl implements ServiceLocator {
   }
 
   @override
-  Future<void> resolveAsync() async {
+  void addFutureFactoryWithParams<T>(
+    FutureParamServiceCreator<T> create, {
+    String? name,
+  }) {
+    final service = FutureParamFactoryService(
+      create: create,
+    );
+
+    if (name != null) {
+      _namedServices[name] = service;
+      return;
+    }
+
+    _typedServices[T] = service;
+  }
+
+  @override
+  Future<void> resolveFutureSingletons() async {
     for (final name in _namedServices.keys) {
-      if (_namedServices[name] is AsyncSingletonService) {
-        final service = _namedServices[name] as AsyncSingletonService;
+      if (_namedServices[name] is FutureSingletonService) {
+        final service = _namedServices[name] as FutureSingletonService;
         _namedServices[name] = await service.resolve();
       }
     }
 
     for (final type in _typedServices.keys) {
-      if (_typedServices[type] is AsyncSingletonService) {
-        final service = _typedServices[type] as AsyncSingletonService;
+      if (_typedServices[type] is FutureSingletonService) {
+        final service = _typedServices[type] as FutureSingletonService;
         _typedServices[type] = await service.resolve();
       }
     }
@@ -188,7 +234,10 @@ class _ServiceLocatorImpl implements ServiceLocator {
     Service<T>? serviceDisposed;
 
     if (name != null && _namedServices.containsKey(name)) {
-      instance = _ServiceResolver.resolveNamedService<T>(_namedServices, name);
+      instance = _ServiceResolver.resolveNamedService<T>(
+        _namedServices,
+        name: name,
+      );
       serviceDisposed = _namedServices.remove(name) as Service<T>;
     } else if (_typedServices.containsKey(T)) {
       instance = _ServiceResolver.resolveTypedService<T>(_typedServices);

@@ -4,7 +4,7 @@ import 'package:inject/services/singleton_service.dart';
 
 /// A service that provides an asynchronous singleton instance of type [T].
 ///
-/// The `AsyncSingletonService` class extends the `Service` class, allowing
+/// The `FutureSingletonService` class extends the `Service` class, allowing
 /// for the creation of a singleton instance of type [T] asynchronously.
 ///
 /// This service is particularly useful when you need to initialize an instance
@@ -13,8 +13,11 @@ import 'package:inject/services/singleton_service.dart';
 ///
 /// Example:
 /// ```dart
-/// final service = AsyncSingletonService<MyType>(
-///   create: () async => await fetchMyType(),
+/// FutureSingletonService<MyService>(
+///   create: () async {
+///     // Perform async operations to initialize MyService
+///     return MyService();
+///   },
 ///   onDispose: (instance) => instance.dispose(),
 /// );
 ///
@@ -25,19 +28,19 @@ import 'package:inject/services/singleton_service.dart';
 /// to perform any cleanup when the singleton is disposed.
 ///
 /// - [T]: The type of the instance managed by this service.
-class AsyncSingletonService<T> extends Service<T> {
+class FutureSingletonService<T> extends Service<T> {
   /// Creates an [AsyncSingletonService] with the given [create] and optional [onDispose] callbacks.
   ///
   /// The [create] callback is required and is responsible for asynchronously creating
   /// the singleton instance. The [onDispose] callback is optional and can be used to
   /// perform any necessary cleanup when the service is disposed.
-  AsyncSingletonService({
+  FutureSingletonService({
     super.onDispose,
     required this.create,
   });
 
   /// A callback that asynchronously creates the singleton instance.
-  final AsyncServiceCreator<T> create;
+  final FutureServiceCreator<T> create;
 
   /// Resolves and returns the singleton service asynchronously.
   ///

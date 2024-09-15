@@ -60,7 +60,7 @@ void main() {
     );
 
     test(
-      'inject.getWithParams<MyParamsService>() should return a new instance of MyParamsService when is added via addParamFactory',
+      'inject.withParams<MyParamsService>() should return a new instance of MyParamsService when is added via addFactoryWithParams',
       () {
         inject.addFactoryWithParams<MyParamService>(
           (params) => MyParamService(
@@ -70,7 +70,7 @@ void main() {
           ),
         );
 
-        final firstInstance = inject.getWithParams<MyParamService>(
+        final firstInstance = inject.withParams<MyParamService>(
           params: {
             'title': 'Titulo 1',
             'description': 'Mi descripcion 1',
@@ -78,7 +78,7 @@ void main() {
           },
         );
 
-        final secondInstance = inject.getWithParams<MyParamService>(
+        final secondInstance = inject.withParams<MyParamService>(
           params: {
             'title': 'Titulo 2',
             'description': 'Mi descripcion 2',
@@ -95,7 +95,7 @@ void main() {
     );
 
     test(
-      "inject.getWithParams<MyParamsService>(name: 'myParamService') should return a new instance of MyParamsService when is added via addParamFactory",
+      "inject.withParams<MyParamsService>(name: 'myParamService') should return a new instance of MyParamsService when is added via addFactoryWithParams",
       () {
         inject.addFactoryWithParams<MyParamService>(
           (params) => MyParamService(
@@ -106,7 +106,7 @@ void main() {
           name: 'myParamService',
         );
 
-        final firstInstance = inject.getWithParams<MyParamService>(
+        final firstInstance = inject.withParams<MyParamService>(
           name: 'myParamService',
           params: {
             'title': 'Titulo 1',
@@ -115,7 +115,7 @@ void main() {
           },
         );
 
-        final secondInstance = inject.getWithParams<MyParamService>(
+        final secondInstance = inject.withParams<MyParamService>(
           name: 'myParamService',
           params: {
             'title': 'Titulo 2',
@@ -194,14 +194,14 @@ void main() {
     );
   });
 
-  group('Async:', () {
+  group('Future:', () {
     test(
-      'inject.getAsync<MyService>() should return a new instance of MyService when is added via addAsyncFactory',
+      'inject.future<MyService>() should return a new instance of MyService when is added via addFutureFactory',
       () async {
-        inject.addAsyncFactory<MyService>(() async => MyService());
+        inject.addFutureFactory<MyService>(() async => MyService());
 
-        final firstInstance = await inject.getAsync<MyService>();
-        final secondInstance = await inject.getAsync<MyService>();
+        final firstInstance = await inject.future<MyService>();
+        final secondInstance = await inject.future<MyService>();
 
         expect(firstInstance, isA<MyService>());
         expect(secondInstance, isA<MyService>());
@@ -210,18 +210,18 @@ void main() {
     );
 
     test(
-      "inject.getAsync<MyService>(name: 'myService') should return a new instance of MyService "
-      "when is added via addAsyncFactory(name: 'myService')",
+      "inject.future<MyService>(name: 'myService') should return a new instance of MyService "
+      "when is added via addFutureFactory(name: 'myService')",
       () async {
-        inject.addAsyncFactory<MyService>(
+        inject.addFutureFactory<MyService>(
           () async => MyService(),
           name: 'myService',
         );
 
-        final firstInstance = await inject.getAsync<MyService>(
+        final firstInstance = await inject.future<MyService>(
           name: 'myService',
         );
-        final secondInstance = await inject.getAsync<MyService>(
+        final secondInstance = await inject.future<MyService>(
           name: 'myService',
         );
 
@@ -232,11 +232,11 @@ void main() {
     );
 
     test(
-      'inject<MyService>() should return a same instance of MyService when is added via addAsyncSingleton',
+      'inject<MyService>() should return a same instance of MyService when is added via addFutureSingleton',
       () async {
-        inject.addAsyncSingleton<MyService>(() async => MyService());
+        inject.addFutureSingleton<MyService>(() async => MyService());
 
-        await inject.resolveAsync();
+        await inject.resolveFutureSingletons();
 
         final firstInstance = inject<MyService>();
         final secondInstance = inject<MyService>();
@@ -249,14 +249,14 @@ void main() {
 
     test(
       "inject<MyService>(name: 'myService') should return a single instance of MyService "
-      "when is added via addAsyncSingleton(name: 'myService')",
+      "when is added via addFutureSingleton(name: 'myService')",
       () async {
-        inject.addAsyncSingleton<MyService>(
+        inject.addFutureSingleton<MyService>(
           () async => MyService(),
           name: 'myService',
         );
 
-        await inject.resolveAsync();
+        await inject.resolveFutureSingletons();
 
         final firstInstance = inject<MyService>(name: 'myService');
         final secondInstance = inject<MyService>(name: 'myService');
@@ -266,6 +266,80 @@ void main() {
         expect(firstInstance.hashCode == secondInstance.hashCode, isTrue);
       },
     );
+
+    test(
+      'inject.futureWithParams<MyParamsService>() should return a new instance of MyParamsService when is added via addFutureFactoryWithParams',
+      () async {
+        inject.addFutureFactoryWithParams<MyParamService>(
+          (params) async => MyParamService(
+            params['title'] ?? '',
+            description: params['description'] ?? '',
+            rating: params['rating'],
+          ),
+        );
+
+        final firstInstance = await inject.futureWithParams<MyParamService>(
+          params: {
+            'title': 'Titulo 1',
+            'description': 'Mi descripcion 1',
+            'rating': 3.4,
+          },
+        );
+
+        final secondInstance = await inject.futureWithParams<MyParamService>(
+          params: {
+            'title': 'Titulo 2',
+            'description': 'Mi descripcion 2',
+          },
+        );
+
+        expect(firstInstance, isA<MyParamService>());
+        expect(secondInstance, isA<MyParamService>());
+        expect(firstInstance.title, equals('Titulo 1'));
+        expect(secondInstance.title, equals('Titulo 2'));
+        expect(firstInstance.rating, equals(3.4));
+        expect(secondInstance.rating, isNull);
+      },
+    );
+
+    test(
+      "inject.futureWithParams<MyParamsService>(name: 'myParamService') should return a new instance of MyParamsService when is added via addFutureFactoryWithParams",
+      () async {
+        inject.addFutureFactoryWithParams<MyParamService>(
+          (params) async => MyParamService(
+            params['title'] ?? '',
+            description: params['description'] ?? '',
+            rating: params['rating'],
+          ),
+          name: 'myParamService',
+        );
+
+        final firstInstance = await inject.futureWithParams<MyParamService>(
+          name: 'myParamService',
+          params: {
+            'title': 'Titulo 1',
+            'description': 'Mi descripcion 1',
+            'rating': 3.4,
+          },
+        );
+
+        final secondInstance = await inject.futureWithParams<MyParamService>(
+          name: 'myParamService',
+          params: {
+            'title': 'Titulo 2',
+            'description': 'Mi descripcion 2',
+          },
+        );
+
+        expect(firstInstance, isA<MyParamService>());
+        expect(secondInstance, isA<MyParamService>());
+        expect(firstInstance.title, equals('Titulo 1'));
+        expect(secondInstance.title, equals('Titulo 2'));
+        expect(firstInstance.rating, equals(3.4));
+        expect(secondInstance.rating, isNull);
+      },
+    );
+
   });
 
   group('Exception:', () {
@@ -280,10 +354,10 @@ void main() {
     );
 
     test(
-      'inject.getWithParams<MyParamService>() should return a StateError when MyParamService is not registered',
+      'inject.withParams<MyParamService>() should return a StateError when MyParamService is not registered',
       () {
         expect(
-          () => inject.getWithParams<MyParamService>(params: {}),
+          () => inject.withParams<MyParamService>(params: {}),
           throwsA(isStateError),
         );
       },
@@ -300,29 +374,29 @@ void main() {
     );
 
     test(
-      'inject.getAsync<MyService>() should return a StateError when MyService is not registered',
+      'inject.future<MyService>() should return a StateError when MyService is not registered',
       () {
         expect(
-          () async => await inject.getAsync<MyService>(),
+          () async => await inject.future<MyService>(),
           throwsA(isStateError),
         );
       },
     );
 
     test(
-      "inject.getAsync<MyService>(name: 'myService') should return a StateError when MyService is not registered",
+      "inject.future<MyService>(name: 'myService') should return a StateError when MyService is not registered",
       () {
         expect(
-          () async => await inject.getAsync<MyService>(name: 'myService'),
+          () async => await inject.future<MyService>(name: 'myService'),
           throwsA(isStateError),
         );
       },
     );
 
     test(
-      'inject<MyService>() should return a StateError when MyService is registered as Async but resolveAsync() is not called before',
+      'inject<MyService>() should return a StateError when MyService is registered as Async but resolveFutureSingletons() is not called before',
       () {
-        inject.addAsyncSingleton<MyService>(() async => MyService());
+        inject.addFutureSingleton<MyService>(() async => MyService());
 
         expect(
           () => inject<MyService>(),
@@ -332,9 +406,9 @@ void main() {
     );
 
     test(
-      "inject<MyService>(name: 'myService') should return a StateError when MyService is registered as async singleton but resolveAsync() is not called before",
+      "inject<MyService>(name: 'myService') should return a StateError when MyService is registered as future singleton but resolveFutureSingletons() is not called before",
       () {
-        inject.addAsyncSingleton<MyService>(
+        inject.addFutureSingleton<MyService>(
           () async => MyService(),
           name: 'myService',
         );
@@ -347,9 +421,9 @@ void main() {
     );
 
     test(
-      "inject<MyService>() should return a StateError when MyService is registered as async factory",
+      "inject<MyService>() should return a StateError when MyService is registered as future factory",
       () {
-        inject.addAsyncFactory<MyService>(
+        inject.addFutureFactory<MyService>(
           () async => MyService(),
         );
 
@@ -361,9 +435,9 @@ void main() {
     );
 
     test(
-      "inject<MyService>(name: 'myService') should return a StateError when MyService is registered as async factory",
+      "inject<MyService>(name: 'myService') should return a StateError when MyService is registered as future factory",
       () {
-        inject.addAsyncFactory<MyService>(
+        inject.addFutureFactory<MyService>(
           () async => MyService(),
           name: 'myService',
         );
@@ -376,19 +450,19 @@ void main() {
     );
 
     test(
-      'inject.getAsync<MyService>() should return a StateError when MyService is registered as Sync',
+      'inject.future<MyService>() should return a StateError when MyService is registered as Sync',
       () {
         inject.addSingleton<MyService>(MyService());
 
         expect(
-          () async => await inject.getAsync<MyService>(),
+          () async => await inject.future<MyService>(),
           throwsA(isStateError),
         );
       },
     );
 
     test(
-      "inject.getAsync<MyService>(name: 'myService') should return a StateError when MyService is registered as Sync",
+      "inject.future<MyService>(name: 'myService') should return a StateError when MyService is registered as Sync",
       () {
         inject.addSingleton<MyService>(
           MyService(),
@@ -396,35 +470,35 @@ void main() {
         );
 
         expect(
-          () async => await inject.getAsync<MyService>(name: 'myService'),
+          () async => await inject.future<MyService>(name: 'myService'),
           throwsA(isStateError),
         );
       },
     );
 
     test(
-      "inject.getWithParams<MyService>(params: {}) should return a StateError when MyService is registered as Singleton",
+      "inject.withParams<MyService>(params: {}) should return a StateError when MyService is registered as Singleton",
       () {
         inject.addSingleton<MyParamService>(
           MyParamService('', description: ''),
         );
 
         expect(
-          () => inject.getWithParams<MyParamService>(params: {}),
+          () => inject.withParams<MyParamService>(params: {}),
           throwsA(isStateError),
         );
       },
     );
 
     test(
-      "inject.getWithParams<MyParamService>(name: 'myService', params: {}) should return a StateError when MyParamService is unregistered by name",
+      "inject.withParams<MyParamService>(name: 'myService', params: {}) should return a StateError when MyParamService is unregistered by name",
       () {
         inject.addSingleton<MyParamService>(
           MyParamService('', description: ''),
         );
 
         expect(
-          () => inject.getWithParams<MyParamService>(
+          () => inject.withParams<MyParamService>(
             name: 'myService',
             params: {},
           ),
@@ -434,7 +508,7 @@ void main() {
     );
 
     test(
-      "inject.getWithParams<MyService>(name: 'myService', params: {}) should return a StateError when MyService is registered as Singleton",
+      "inject.withParams<MyService>(name: 'myService', params: {}) should return a StateError when MyService is registered as Singleton",
       () {
         inject.addSingleton<MyParamService>(
           MyParamService('', description: ''),
@@ -442,7 +516,66 @@ void main() {
         );
 
         expect(
-          () => inject.getWithParams<MyParamService>(
+          () => inject.withParams<MyParamService>(
+            name: 'myService',
+            params: {},
+          ),
+          throwsA(isStateError),
+        );
+      },
+    );
+
+    test(
+      "inject.futureWithParams<MyService>(params: {}) should return a StateError when MyService is not registered",
+      () {
+        expect(
+          () async => await inject.futureWithParams<MyService>(params: {}),
+          throwsA(isStateError),
+        );
+      },
+    );
+
+    test(
+      "inject.futureWithParams<MyService>(params: {}) should return a StateError when MyService is registered as Singleton",
+      () {
+        inject.addSingleton<MyParamService>(
+          MyParamService('', description: ''),
+        );
+
+        expect(
+          () => inject.futureWithParams<MyParamService>(params: {}),
+          throwsA(isStateError),
+        );
+      },
+    );
+
+    test(
+      "inject.futureWithParams<MyParamService>(name: 'myService', params: {}) should return a StateError when MyParamService is unregistered by name",
+      () {
+        inject.addSingleton<MyParamService>(
+          MyParamService('', description: ''),
+        );
+
+        expect(
+          () => inject.futureWithParams<MyParamService>(
+            name: 'myService',
+            params: {},
+          ),
+          throwsA(isStateError),
+        );
+      },
+    );
+
+    test(
+      "inject.futureWithParams<MyService>(name: 'myService', params: {}) should return a StateError when MyService is registered as Singleton",
+      () {
+        inject.addSingleton<MyParamService>(
+          MyParamService('', description: ''),
+          name: 'myService',
+        );
+
+        expect(
+          () => inject.futureWithParams<MyParamService>(
             name: 'myService',
             params: {},
           ),

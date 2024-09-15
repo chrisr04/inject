@@ -20,8 +20,8 @@ abstract class ServiceLocator {
   /// The `create` parameter is a function that returns a `Future` of the instance to be registered as a singleton.
   /// The optional `name` parameter can be used to register the instance under a specific name.
   /// The optional `onDispose` parameter allows specifying a custom disposal function.
-  void addAsyncSingleton<T>(
-    AsyncServiceCreator<T> create, {
+  void addFutureSingleton<T>(
+    FutureServiceCreator<T> create, {
     String? name,
     ServiceDisposer<T>? onDispose,
   });
@@ -62,8 +62,18 @@ abstract class ServiceLocator {
   /// The `create` parameter is a function that returns a `Future` of a new instance each time it is requested.
   /// The optional `name` parameter can be used to register the factory under a specific name.
   /// The optional `onDispose` parameter allows specifying a custom disposal function.
-  void addAsyncFactory<T>(
-    AsyncServiceCreator<T> create, {
+  void addFutureFactory<T>(
+    FutureServiceCreator<T> create, {
+    String? name,
+  });
+
+  ///  Adds an asynchronous factory with dynamic params to the service locator.
+  ///
+  /// The `create` parameter is a function that creates new instances each time they are requested.
+  /// The optional `name` parameter can be used to register the factory under a specific name.
+  /// The optional `onDispose` parameter allows specifying a custom disposal function.
+  void addFutureFactoryWithParams<T>(
+    FutureParamServiceCreator<T> create, {
     String? name,
   });
 
@@ -71,13 +81,22 @@ abstract class ServiceLocator {
   ///
   /// The optional `name` parameter can be used to retrieve the instance registered under a specific name.
   /// Returns a `Future` of the requested instance.
-  Future<T> getAsync<T>({String? name});
+  Future<T> future<T>({String? name});
 
   /// Retrieves a factory instance with given params from the service locator.
   ///
-  /// The `params` parameter is a Map<Symbol, dynamic> of the params for the instance.
+  /// The `params` parameter is a Map<String, dynamic> of the params for the instance.
   /// The optional `name` parameter can be used to register the factory under a specific name.
-  T getWithParams<T>({
+  T withParams<T>({
+    required Map<String, dynamic> params,
+    String? name,
+  });
+
+  /// Retrieves an asynchronous instance with given params from the service locator.
+  ///
+  /// The `params` parameter is a Map<String, dynamic> of the params for the instance.
+  /// The optional `name` parameter can be used to register the factory under a specific name.
+  Future<T> futureWithParams<T>({
     required Map<String, dynamic> params,
     String? name,
   });
@@ -85,7 +104,7 @@ abstract class ServiceLocator {
   /// Resolves all asynchronous singletons registered in the service locator.
   ///
   /// Returns a `Future` that completes when all asynchronous singletons have been resolved.
-  Future<void> resolveAsync();
+  Future<void> resolveFutureSingletons();
 
   /// Disposes of a registered instance.
   ///
