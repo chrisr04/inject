@@ -28,7 +28,7 @@ abstract class _ServiceResolver {
     if (namedServices[name] is FutureFactoryService<T>) {
       throw StateError(
         'The service $T can\'t be accessed via inject<$T>(\'$name\'). '
-        'call inject.getAsync<$T>(\'$name\') instead',
+        'call inject.future<$T>(\'$name\') instead',
       );
     }
 
@@ -60,7 +60,7 @@ abstract class _ServiceResolver {
     if (typedServices[T] is FutureFactoryService<T>) {
       throw StateError(
         'The service $T can\'t be accessed via inject<$T>(). '
-        'call inject.getAsync<$T>() instead',
+        'call inject.future<$T>() instead',
       );
     }
 
@@ -93,7 +93,7 @@ abstract class _ServiceResolver {
     if (name.isEmpty || !namedServices.containsKey(name)) {
       throw StateError(
         'The service $T with name \'$name\' doesn\'t exist. '
-        'make sure to register it before calling inject.getAsync<$T>(\'$name\')',
+        'make sure to register it before calling inject.future<$T>(\'$name\')',
       );
     }
 
@@ -133,7 +133,7 @@ abstract class _ServiceResolver {
     if (name.isEmpty || !namedServices.containsKey(name)) {
       throw StateError(
         'The service $T with name \'$name\' doesn\'t exist. '
-        'make sure to register it before calling inject.getWithParams<$T>(name: \'$name\', params: ...)',
+        'make sure to register it before calling inject.withParams<$T>(name: \'$name\', params: ...)',
       );
     }
 
@@ -174,7 +174,7 @@ abstract class _ServiceResolver {
     if (name.isEmpty || !namedServices.containsKey(name)) {
       throw StateError(
         'The service $T with name \'$name\' doesn\'t exist. '
-        'make sure to register it before calling inject.getAsyncWithParams<$T>(name: \'$name\', params: ...)',
+        'make sure to register it before calling inject.futureWithParams<$T>(name: \'$name\', params: ...)',
       );
     }
 
