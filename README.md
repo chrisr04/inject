@@ -20,7 +20,7 @@ dependencies:
   inject:
     git:
       url: https://github.com/chrisr04/inject
-      ref: v0.0.3
+      ref: v0.0.4
 ```
 
 ## Usage
@@ -101,11 +101,11 @@ final myService = inject<MyService>();
 For Singletons:
 
 ```dart
-await inject.resolveFutureSingletons();
+await inject.resolveAll();
 final myService = inject<MyService>();
 ```
 
-**Note:** The `resolveFutureSingletons()` method resolves all asynchronous singletons you have added so far.
+**Note:** The `resolveAll()` method resolves all asynchronous singletons you have added so far.
 
 For factories:
 

@@ -212,7 +212,7 @@ class _ServiceLocatorImpl implements ServiceLocator {
   }
 
   @override
-  Future<void> resolveFutureSingletons() async {
+  Future<void> resolveAll() async {
     for (final name in _namedServices.keys) {
       if (_namedServices[name] is FutureSingletonService) {
         final service = _namedServices[name] as FutureSingletonService;

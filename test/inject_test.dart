@@ -236,7 +236,7 @@ void main() {
       () async {
         inject.addFutureSingleton<MyService>(() async => MyService());
 
-        await inject.resolveFutureSingletons();
+        await inject.resolveAll();
 
         final firstInstance = inject<MyService>();
         final secondInstance = inject<MyService>();
@@ -256,7 +256,7 @@ void main() {
           name: 'myService',
         );
 
-        await inject.resolveFutureSingletons();
+        await inject.resolveAll();
 
         final firstInstance = inject<MyService>(name: 'myService');
         final secondInstance = inject<MyService>(name: 'myService');
@@ -394,7 +394,7 @@ void main() {
     );
 
     test(
-      'inject<MyService>() should return a StateError when MyService is registered as Async but resolveFutureSingletons() is not called before',
+      'inject<MyService>() should return a StateError when MyService is registered as Async but resolveAll() is not called before',
       () {
         inject.addFutureSingleton<MyService>(() async => MyService());
 
@@ -406,7 +406,7 @@ void main() {
     );
 
     test(
-      "inject<MyService>(name: 'myService') should return a StateError when MyService is registered as future singleton but resolveFutureSingletons() is not called before",
+      "inject<MyService>(name: 'myService') should return a StateError when MyService is registered as future singleton but resolveAll() is not called before",
       () {
         inject.addFutureSingleton<MyService>(
           () async => MyService(),

@@ -104,7 +104,7 @@ abstract class ServiceLocator {
   /// Resolves all asynchronous singletons registered in the service locator.
   ///
   /// Returns a `Future` that completes when all asynchronous singletons have been resolved.
-  Future<void> resolveFutureSingletons();
+  Future<void> resolveAll();
 
   /// Disposes of a registered instance.
   ///
