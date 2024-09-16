@@ -1,6 +1,6 @@
 name: inject
 description: "This package provides a powerful and flexible service locator for Flutter projects."
-version: 0.0.2
+version: 0.0.5
 homepage:
 
 environment:

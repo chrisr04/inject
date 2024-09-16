@@ -20,7 +20,7 @@ dependencies:
   inject:
     git:
       url: https://github.com/chrisr04/inject
-      ref: v0.0.4
+      ref: v0.0.5
 ```
 
 ## Usage
